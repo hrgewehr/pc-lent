@@ -1,0 +1,24 @@
+<Window x:Class="PCMedic.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PCMedic UI" Height="300" Width="420">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="PCMedic Status" FontSize="18" FontWeight="Bold" />
+
+        <StackPanel Grid.Row="1" Margin="0,12,0,12">
+            <TextBlock Text="Latest snapshot:" FontWeight="SemiBold"/>
+            <TextBlock x:Name="TimestampText" Text="Timestamp: -" />
+            <TextBlock x:Name="StatusText" Text="Status: -" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Click="Refresh_Click" Content="Refresh" Width="100" />
+        </StackPanel>
+    </Grid>
+</Window>
