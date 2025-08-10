@@ -1,0 +1,1 @@
+namespace PCMedic.Shared.Models { public enum Severity { Info, Low, Medium, High, Critical } }

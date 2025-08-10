@@ -1,3 +1,56 @@
+# PCMedic (.NET 8, Windows-only) – MVP
+
+This repo contains a Windows-only .NET 8 solution with three projects:
+- PCMedic.Agent: Windows Service hosting a local API (Kestrel on http://localhost:7766)
+- PCMedic.UI: WPF desktop app that displays status/findings and triggers fixes
+- PCMedic.Shared: Shared DTOs and enums
+
+## Prerequisites
+- Windows 10/11
+- .NET SDK 8.0+
+- Administrator privileges to install/start the Windows Service
+
+## Build & Restore
+```powershell
+# From repository root
+ dotnet restore
+```
+
+## Install and start the Agent as Windows Service
+Run as Administrator:
+```powershell
+ .\scripts\install-service.ps1
+```
+This publishes PCMedic.Agent (single-file) and installs/starts the service "PCMedicAgent".
+
+To uninstall:
+```powershell
+ .\scripts\uninstall-service.ps1
+```
+
+## Run the UI
+- Open PCMedic.UI in your IDE and Start (Debug) OR
+- From CLI: `dotnet run --project .\PCMedic.UI\PCMedic.UI.csproj`
+
+The UI expects the Agent API at http://localhost:7766.
+
+## API Endpoints (local only)
+- GET /health/latest → latest snapshot JSON
+- GET /findings → evaluated findings
+- POST /fix/{action} → triggers a repair action
+  - actions: `sfc`, `dism`, `schedule-chkdsk`, `defrag-hdd`
+
+Notes:
+- Actions write logs to %ProgramData%\PCMedic\logs\repair.log
+- API is bound to localhost only; no auth (MVP)
+
+## Important MVP Constraints
+- Do not defragment SSDs. Use the `defrag-hdd` action only for HDD volumes.
+- All actions require elevation when executed by the service; results are logged.
+- SMART via WMI (MSStorageDriver_*). If raw data unavailable, mark values as Unknown and continue.
+
+---
+
 # Welcome to your Lovable project
 
 ## Project info
@@ -24,16 +77,16 @@ Follow these steps:
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+ git clone <YOUR_GIT_URL>
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+ cd <YOUR_PROJECT_NAME>
 
 # Step 3: Install the necessary dependencies.
-npm i
+ npm i
 
 # Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+ npm run dev
 ```
 
 **Edit a file directly in GitHub**
