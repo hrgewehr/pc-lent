@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Diagnostics;
 using PCMedic.Shared.Models; // pentru Finding
 
 namespace PCMedic.UI
@@ -39,6 +40,18 @@ namespace PCMedic.UI
         private async void RunSfc_Click(object s, RoutedEventArgs e) => await RunFix("sfc");
         private async void RunDism_Click(object s, RoutedEventArgs e)=> await RunFix("dism");
         private async void DefragHdd_Click(object s, RoutedEventArgs e)=> await RunFix("defrag-hdd");
+        private async void CheckUpdates_Click(object s, RoutedEventArgs e) => await Updater.OpenLatestReleaseAsync();
+        private void Uninstall_Click(object s, RoutedEventArgs e)
+        {
+            try
+            {
+                var psi = new ProcessStartInfo("powershell.exe",
+                  "-NoProfile -ExecutionPolicy Bypass -Command \"Start-Process sc.exe -ArgumentList 'stop PCMedic.Agent' -Verb runas -WindowStyle Hidden; Start-Sleep -s 2; Start-Process sc.exe -ArgumentList 'delete PCMedic.Agent' -Verb runas -WindowStyle Hidden\"")
+                { UseShellExecute = false, CreateNoWindow = true };
+                Process.Start(psi);
+            }
+            catch { }
+        }
 
         // ===== UI helpers =====
         private ItemsControl? FindingsControl =>

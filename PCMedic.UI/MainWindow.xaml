@@ -7,7 +7,9 @@
       <Button Width="120" Margin="0,0,10,0" Click="Refresh_Click">Scan now</Button>
       <Button Width="150" Margin="0,0,10,0" Click="Fix_Sfc">Run SFC</Button>
       <Button Width="170" Margin="0,0,10,0" Click="Fix_Dism">Run DISM</Button>
-      <Button Width="170" Click="Fix_Defrag">Defrag HDD</Button>
+      <Button Width="170" Margin="0,0,10,0" Click="Fix_Defrag">Defrag HDD</Button>
+      <Button Width="150" Margin="0,0,10,0" Click="CheckUpdates_Click">Check updates</Button>
+      <Button Width="160" Click="Uninstall_Click">Uninstall Agent</Button>
     </StackPanel>
     <Grid>
       <Grid.RowDefinitions>

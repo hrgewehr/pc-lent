@@ -25,7 +25,8 @@ namespace PCMedic.Agent.Services {
                                         new());
           snap = snap with { Findings = RuleEngine.Evaluate(snap) };
           _store.Current = snap;
-        } catch (Exception ex) { _log.LogError(ex, "collect error"); }
+          OpLogger.Log($"Collected snapshot: findings={snap.Findings.Count}, CPU={snap.Perf.CpuUsagePercent:0}%, RAM={snap.Perf.RamUsedGb:0.0}/{snap.Perf.RamTotalGb:0.0}GB, DiskQ={snap.Perf.DiskQueue:0.00}");
+        } catch (Exception ex) { _log.LogError(ex, "collect error"); OpLogger.Log($"Collect error: {ex.Message}"); }
         await Task.Delay(TimeSpan.FromMinutes(5), ct);
       }
     }
