@@ -1,10 +1,7 @@
-param([string]$OutDir = "publish")
--dotnet publish .\PCMedic.Agent\PCMedic.Agent.csproj -c Release -r win-x64 -p:PublishSingleFile=true -p:PublishTrimmed=false -o $OutDir
-+$ErrorActionPreference = "Stop"
-+dotnet publish .\PCMedic.Agent\PCMedic.Agent.csproj -c Release -r win-x64 -p:PublishSingleFile=true -p:PublishTrimmed=false -o $OutDir
-+$svcPath = (Resolve-Path "$OutDir\PCMedic.Agent.exe").Path
-+if (-not (Get-Service -Name "PCMedicAgent" -ErrorAction SilentlyContinue)) {
-+  sc.exe create "PCMedicAgent" binPath= "$svcPath" start= auto | Out-Null
-+}
-+sc.exe start "PCMedicAgent" | Out-Null
-+Write-Host "PCMedic Agent instalat si pornit."
+$svcName = "PCMedic.Agent"
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
+$agent = Join-Path (Split-Path -Parent $here) "Agent\PCMedic.Agent.exe"
+
+sc.exe create $svcName binPath= "`"$agent`"" start= auto obj= "LocalSystem"
+sc.exe description $svcName "PCMedic monitoring agent"
+sc.exe start $svcName

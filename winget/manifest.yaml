@@ -1,0 +1,14 @@
+PackageIdentifier: PCMedic.PCMedic
+PackageVersion: 0.1.0
+PackageName: PCMedic
+Publisher: Tactiva Consulting SRL
+License: Proprietary
+ShortDescription: Agent Windows care detectează probleme PC și aplică remedieri on-demand.
+Installers:
+  - Architecture: x64
+    InstallerType: exe
+    InstallerUrl: https://github.com/ORG_OR_USER/PCMedic/releases/download/v0.1.0/PCMedic-Setup.exe
+    InstallerSha256: FILL_ME
+    InstallerSwitches:
+      Silent: /VERYSILENT /NORESTART
+      SilentWithProgress: /SILENT /NORESTART

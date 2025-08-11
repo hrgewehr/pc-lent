@@ -24,14 +24,20 @@ app.MapGet("/ping", () => "OK");
 var store = app.Services.GetRequiredService<SnapshotStore>();
 app.MapGet("/health/latest", () => Results.Json(store.Current));
 app.MapGet("/findings",      () => Results.Json(store.Current.Findings));
-app.MapPost("/fix/{action}", async (string action) =>
-    action.ToLowerInvariant() switch
+app.MapPost("/fix/{action}", async (string action) => {
+    OpLogger.Log($"Fix requested: {action}");
+    var lower = action.ToLowerInvariant();
+    int code = lower switch
     {
-        "sfc"             => Results.Json(new { code = await RepairActions.Sfc() }),
-        "dism"            => Results.Json(new { code = await RepairActions.Dism() }),
-        "schedule-chkdsk" => Results.Json(new { code = await RepairActions.ScheduleChkdsk() }),
-        "defrag-hdd"      => Results.Json(new { code = await RepairActions.Defrag("C:") }),
-        _                 => Results.BadRequest(new { error = "unknown action" })
-    });
+        "sfc"             => await RepairActions.Sfc(),
+        "dism"            => await RepairActions.Dism(),
+        "schedule-chkdsk" => await RepairActions.ScheduleChkdsk(),
+        "defrag-hdd"      => await RepairActions.Defrag("C:"),
+        _                  => -1
+    };
+    if (code == -1) return Results.BadRequest(new { error = "unknown action" });
+    OpLogger.Log($"Fix result: {action} => exitCode={code}");
+    return Results.Json(new { code });
+});
 
 app.Run();

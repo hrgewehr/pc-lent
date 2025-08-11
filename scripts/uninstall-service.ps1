@@ -1,4 +1,4 @@
 $ErrorActionPreference = "Stop"
-sc.exe stop "PCMedicAgent" | Out-Null
-sc.exe delete "PCMedicAgent" | Out-Null
+sc.exe stop "PCMedic.Agent" | Out-Null
+sc.exe delete "PCMedic.Agent" | Out-Null
 Write-Host "PCMedic Agent eliminat."

@@ -1,0 +1,32 @@
+name: release
+on:
+  push:
+    tags: ['v*']
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '8.0.x' }
+
+      - name: Publish apps
+        shell: pwsh
+        run: |
+          dotnet publish PCMedic.Agent/PCMedic.Agent.csproj -c Release -r win-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
+          dotnet publish PCMedic.UI/PCMedic.UI.csproj     -c Release -r win-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
+          New-Item -ItemType Directory -Force -Path dist/PCMedic | Out-Null
+          Copy-Item -Recurse PCMedic.Agent/bin/Release/net8.0-windows/win-x64/publish dist/PCMedic/Agent
+          Copy-Item -Recurse PCMedic.UI/bin/Release/net8.0-windows/win-x64/publish     dist/PCMedic/UI
+          Copy-Item -Recurse scripts dist/PCMedic/scripts
+          if (-not (Test-Path dist/PCMedic/docs)) { New-Item -ItemType Directory dist/PCMedic/docs | Out-Null }
+          Compress-Archive -Path dist/PCMedic/* -DestinationPath PCMedic-win64.zip -Force
+
+      # Optional: Code signing step aici (dacă adaugi certificat)
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: PCMedic-win64.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
