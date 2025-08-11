@@ -1,0 +1,12 @@
+F:\github\pc-lent\PCMedic.Shared\bin\Release\net8.0\PCMedic.Shared.deps.json
+F:\github\pc-lent\PCMedic.Shared\bin\Release\net8.0\PCMedic.Shared.dll
+F:\github\pc-lent\PCMedic.Shared\bin\Release\net8.0\PCMedic.Shared.pdb
+F:\github\pc-lent\PCMedic.Shared\obj\Release\net8.0\PCMedic.Shared.GeneratedMSBuildEditorConfig.editorconfig
+F:\github\pc-lent\PCMedic.Shared\obj\Release\net8.0\PCMedic.Shared.AssemblyInfoInputs.cache
+F:\github\pc-lent\PCMedic.Shared\obj\Release\net8.0\PCMedic.Shared.AssemblyInfo.cs
+F:\github\pc-lent\PCMedic.Shared\obj\Release\net8.0\PCMedic.Shared.csproj.CoreCompileInputs.cache
+F:\github\pc-lent\PCMedic.Shared\obj\Release\net8.0\PCMedic.Shared.sourcelink.json
+F:\github\pc-lent\PCMedic.Shared\obj\Release\net8.0\PCMedic.Shared.dll
+F:\github\pc-lent\PCMedic.Shared\obj\Release\net8.0\refint\PCMedic.Shared.dll
+F:\github\pc-lent\PCMedic.Shared\obj\Release\net8.0\PCMedic.Shared.pdb
+F:\github\pc-lent\PCMedic.Shared\obj\Release\net8.0\ref\PCMedic.Shared.dll

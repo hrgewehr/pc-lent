@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "PCMedic.UI/1.0.0": {
+        "dependencies": {
+          "PCMedic.Shared": "1.0.0"
+        },
+        "runtime": {
+          "PCMedic.UI.dll": {}
+        }
+      },
+      "PCMedic.Shared/1.0.0": {
+        "runtime": {
+          "PCMedic.Shared.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PCMedic.UI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PCMedic.Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "ae1Vu3hBXomgCyYYuE9D6Z+nVXf/ZtZGGDkfjPMi1XU=",
+  "Source": "PCMedic.Agent",
+  "BasePath": "_content/PCMedic.Agent",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
