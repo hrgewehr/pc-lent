@@ -22,16 +22,8 @@ jobs:
           if (-not (Test-Path dist/PCMedic/docs)) { New-Item -ItemType Directory dist/PCMedic/docs | Out-Null }
           Compress-Archive -Path dist/PCMedic/* -DestinationPath PCMedic-win64.zip -Force
 
-      - name: Setup GitHub CLI
-        uses: cli/gh-actions@v2
-
-      - name: Upload to PUBLIC releases repo
-        env:
-          GH_TOKEN: ${{ secrets.RELEASES_PAT }}
-          PUB_OWNER: hrgewehr
-          PUB_REPO: pcm-releases
-        shell: pwsh
-        run: |
-          $tag = "${{ github.ref_name }}"
-          gh release create $tag -R "$env:PUB_OWNER/$env:PUB_REPO" -t $tag -n "PCMedic $tag" --generate-notes || echo "Release exists"
-          gh release upload  $tag -R "$env:PUB_OWNER/$env:PUB_REPO" PCMedic-win64.zip --clobber
+      - name: Create GitHub Release + upload asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: PCMedic-win64.zip
+          generate_release_notes: true
