@@ -2,17 +2,23 @@ name: release
 on:
   push:
     tags: ['v*']
+
+permissions:
+  contents: write   # necesar ca să atașeze fișierul la release
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
-        with: { dotnet-version: '8.0.x' }
+        with:
+          dotnet-version: '8.0.x'
 
-      - name: Publish apps
+      - name: Build & publish apps
         shell: pwsh
         run: |
+          $ErrorActionPreference = "Stop"
           dotnet publish PCMedic.Agent/PCMedic.Agent.csproj -c Release -r win-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
           dotnet publish PCMedic.UI/PCMedic.UI.csproj     -c Release -r win-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
           New-Item -ItemType Directory -Force -Path dist/PCMedic | Out-Null
@@ -21,9 +27,11 @@ jobs:
           Copy-Item -Recurse scripts dist/PCMedic/scripts
           if (-not (Test-Path dist/PCMedic/docs)) { New-Item -ItemType Directory dist/PCMedic/docs | Out-Null }
           Compress-Archive -Path dist/PCMedic/* -DestinationPath PCMedic-win64.zip -Force
+          Write-Host "ZIP created at $(Resolve-Path PCMedic-win64.zip)"
 
-      - name: Create GitHub Release + upload asset
+      - name: Attach asset to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: PCMedic-win64.zip
-          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
